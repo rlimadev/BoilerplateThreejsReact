@@ -1,6 +1,10 @@
 {
-    "extends": "airbnb-base",
-    "plugins": [
-        "import"
-    ]
+    "extends": "airbnb",
+    "rules": {
+       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+       "react/destructuring-assignment": [0, "always", { "ignoreClassFields": 0 }]
+    },
+    "env": {
+        "browser": true
+    }
 }
