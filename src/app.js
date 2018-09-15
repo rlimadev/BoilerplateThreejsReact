@@ -5,13 +5,12 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      value: 1,
     };
   }
 
   render() {
     return (
-      <AppContent value={this.state.value} />
+      <AppContent />
     );
   }
 }
