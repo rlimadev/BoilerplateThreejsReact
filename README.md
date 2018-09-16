@@ -27,11 +27,11 @@ For now without tests
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
-* **Rafael Lima** - *Initial work* - [PurpleBooth](https://github.com/rlimadev)
+* **Rafael Lima** - *Initial work* - [RLIMADEV](https://bitly.com/rlimadev)
 
 ## License
 
