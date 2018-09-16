@@ -385,7 +385,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var printWarning = function() {};
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactPropTypesSecret = __webpack_require__(4);
+  var ReactPropTypesSecret = __webpack_require__(5);
   var loggedTypeFailures = {};
 
   printWarning = function(text) {
@@ -471,6 +471,41 @@ module.exports = checkPropTypes;
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(17)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(16)();
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -487,7 +522,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48147,41 +48182,6 @@ function LensFlare() {
 
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(17)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(16)();
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -48242,17 +48242,17 @@ var App = function (_Component) {
   _createClass(App, [{
     key: 'handleSearch',
     value: function handleSearch(e) {
-      this.value = e.target.value;
-      this.keyCode = e.which || e.keyCode;
-      this.ENTER = 13;
+      var value = e.target.value;
 
-      console.log('enter');
-      if (this.keyCode === this.ENTER) {
+      var keyCode = e.which || e.keyCode;
+      var ENTER = 13;
+
+      if (keyCode === ENTER) {
         this.setState({
-          inputText: 'ivonete lima'
+          inputText: value
         });
+        e.target.value = '';
       }
-      console.log(this.state.inputText);
     }
   }, {
     key: 'render',
@@ -48334,7 +48334,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(6);
+var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -48387,7 +48387,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _three = __webpack_require__(5);
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _three = __webpack_require__(6);
 
 var THREE = _interopRequireWildcard(_three);
 
@@ -48395,9 +48399,9 @@ var _cube = __webpack_require__(12);
 
 var _cube2 = _interopRequireDefault(_cube);
 
-var _dancingscript = __webpack_require__(13);
+var _textGeometry = __webpack_require__(13);
 
-var _dancingscript2 = _interopRequireDefault(_dancingscript);
+var _textGeometry2 = _interopRequireDefault(_textGeometry);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -48412,20 +48416,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var BasicView = function (_Component) {
   _inherits(BasicView, _Component);
 
-  function BasicView(inputText) {
+  function BasicView() {
     _classCallCheck(this, BasicView);
 
-    var _this = _possibleConstructorReturn(this, (BasicView.__proto__ || Object.getPrototypeOf(BasicView)).call(this));
-
-    _this.inputTextValue = inputText;
-    return _this;
+    return _possibleConstructorReturn(this, (BasicView.__proto__ || Object.getPrototypeOf(BasicView)).apply(this, arguments));
   }
 
   _createClass(BasicView, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -48437,14 +48436,47 @@ var BasicView = function (_Component) {
       light.position.set(0, 20, 10);
       var ambient = new THREE.AmbientLight({ color: 0x707070 });
 
-      var loader = new THREE.FontLoader();
-      loader.load('./src/fonts/dancing_script.typeface.json', function (font) {
-        var mesh = new _dancingscript2.default(_this2.inputTextValue.inputText, font, 0, 0, 0, true, 0x98cc37);
-        _this2.init(mesh);
-      });
+      this.cube = new _cube2.default(0xff0000, 1, 1, 1, 1, 1);
+      this.cube.position.set(0, -1.4, 0);
+      this.scene.add(this.cube);
 
+      this.camera.position.z = 4;
       this.scene.add(light);
       this.scene.add(ambient);
+
+      this.renderer.render(this.scene, this.camera);
+      this.createText();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.updateFont();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.cube = null;
+      this.scene = null;
+      this.renderer = null;
+      this.myFont = null;
+    }
+  }, {
+    key: 'newRender',
+    value: function newRender() {
+      this.renderer.render(this.camera, this.renderer);
+    }
+  }, {
+    key: 'createText',
+    value: function createText() {
+      var _this2 = this;
+
+      var inputText = this.props.inputText;
+
+      var loader = new THREE.FontLoader();
+      loader.load('./src/fonts/dancing_script.typeface.json', function (font) {
+        var mesh = new _textGeometry2.default(inputText, font, 0, 0, 0, true, 0x98cc37);
+        _this2.init(mesh);
+      });
     }
   }, {
     key: 'init',
@@ -48454,24 +48486,42 @@ var BasicView = function (_Component) {
       this.groupScene.add(this.myFont);
       this.scene.add(this.groupScene);
 
-      this.cube = new _cube2.default(0xff0000, 1, 1, 1, 1, 1);
-      this.cube.position.set(0, -1.4, 0);
-      this.scene.add(this.cube);
-      this.camera.position.z = 4;
-
       this.loopRender();
-      this.renderer.render(this.scene, this.camera);
+    }
+  }, {
+    key: 'updateFont',
+    value: function updateFont() {
+      if (this.groupScene) {
+        this.groupScene.rotation.y = 0;
+        this.cube.rotation.x = 0;
+        this.cube.rotation.y = 0;
+
+        this.groupScene.remove(this.myFont);
+        this.scene.remove(this.groupScene);
+        this.groupScene = null;
+        this.myFont = null;
+
+        this.createText();
+      }
     }
   }, {
     key: 'loopRender',
     value: function loopRender() {
-      this.renderer.render(this.scene, this.camera);
       requestAnimationFrame(this.loopRender.bind(this));
 
-      this.groupScene.rotation.y += 0.01;
+      this.renderRotation();
 
-      this.cube.rotation.x += 0.01;
-      this.cube.rotation.y += 0.01;
+      this.renderer.clear();
+      this.renderer.render(this.scene, this.camera);
+    }
+  }, {
+    key: 'renderRotation',
+    value: function renderRotation() {
+      if (this.groupScene) {
+        this.groupScene.rotation.y += 0.001;
+        this.cube.rotation.x += 0.01;
+        this.cube.rotation.y += 0.01;
+      }
     }
   }, {
     key: 'render',
@@ -48482,6 +48532,10 @@ var BasicView = function (_Component) {
 
   return BasicView;
 }(_react.Component);
+
+BasicView.propTypes = {
+  inputText: _propTypes2.default.string.isRequired
+};
 
 exports.default = BasicView;
 
@@ -48496,7 +48550,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _three = __webpack_require__(5);
+var _three = __webpack_require__(6);
 
 var Cube = function Cube(colorMaterial, width, height, depth, widthSegments, heightSements) {
   var geometry = new _three.BoxGeometry(width, height, depth, widthSegments, heightSements);
@@ -48520,29 +48574,33 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _three = __webpack_require__(5);
+var _three = __webpack_require__(6);
 
 var DancingScript = function DancingScript(text, shape, x, y, z) {
   var doubleSided = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
-  var colorP = arguments[6];
+  var color = arguments[6];
 
-  var shapes = shape.generateShapes('' + text, 1);
+  var parameters = {
+    text: text, shape: shape, x: x, y: y, z: z, doubleSided: doubleSided, color: color
+  };
+
+  var shapes = parameters.shape.generateShapes(parameters.text, 1);
   var geometry = new _three.ShapeBufferGeometry(shapes);
 
   geometry.computeBoundingBox();
 
   var material = new _three.MeshBasicMaterial({
-    color: colorP,
+    color: parameters.color,
     side: _three.DoubleSide
   });
 
   var posX = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
 
   var mesh = new _three.Mesh(geometry, material);
-  mesh.doubleSided = doubleSided;
-  mesh.position.x = x === 0 ? posX : x;
-  mesh.position.y = y;
-  mesh.position.z = z;
+  mesh.doubleSided = parameters.doubleSided;
+  mesh.position.x = parameters.x === 0 ? posX : parameters.x;
+  mesh.position.y = parameters.y;
+  mesh.position.z = parameters.z;
   return mesh;
 };
 
@@ -48563,7 +48621,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(6);
+var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -48629,7 +48687,7 @@ _reactDom2.default.render(_react2.default.createElement(_app2.default), document
 
 
 
-var ReactPropTypesSecret = __webpack_require__(4);
+var ReactPropTypesSecret = __webpack_require__(5);
 
 function emptyFunction() {}
 
@@ -48697,7 +48755,7 @@ module.exports = function() {
 
 var assign = __webpack_require__(2);
 
-var ReactPropTypesSecret = __webpack_require__(4);
+var ReactPropTypesSecret = __webpack_require__(5);
 var checkPropTypes = __webpack_require__(3);
 
 var printWarning = function() {};

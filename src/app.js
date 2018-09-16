@@ -10,17 +10,16 @@ class App extends Component {
   }
 
   handleSearch(e) {
-    this.value = e.target.value;
-    this.keyCode = e.which || e.keyCode;
-    this.ENTER = 13;
+    const { value } = e.target;
+    const keyCode = e.which || e.keyCode;
+    const ENTER = 13;
 
-    console.log('enter');
-    if (this.keyCode === this.ENTER) {
+    if (keyCode === ENTER) {
       this.setState({
-        inputText: 'ivonete lima',
+        inputText: value,
       });
+      e.target.value = '';
     }
-    console.log(this.state.inputText);
   }
 
   render() {

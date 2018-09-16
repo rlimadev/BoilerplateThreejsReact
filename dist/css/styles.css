@@ -16,11 +16,19 @@ canvas {
 }
 
 .search {
-  margin-bottom: 30px;
+  margin-bottom: 0px;
+  background-color: black;
 }
 
 .search input {
   font-size: 30px;
   padding: 10px;
   width: 100%;
+  background-color: black;
+  border: none;
+}
+
+.search input, selected, textarea, ::placeholder {
+  color: white;
+  text-align: center;
 }
